@@ -21,16 +21,14 @@ steps:
   displayName: 'Build the application'
 
 - script: |
-    mkdir -p $(Build.ArtifactStagingDirectory)/nodejs_app_artifact
-    cp -R * $(Build.ArtifactStagingDirectory)/nodejs_app_artifact
-    cp web.config $(Build.ArtifactStagingDirectory)/nodejs_app_artifact/web.config
+    mkdir -p $(Build.ArtifactStagingDirectory)/_nodejs/nodejs_app_artifact
+    cp -R * $(Build.ArtifactStagingDirectory)/_nodejs/nodejs_app_artifact
+    cp web.config $(Build.ArtifactStagingDirectory)/_nodejs/nodejs_app_artifact/web.config
   displayName: 'Copy files to artifact staging directory'
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/nodejs_app_artifact'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/_nodejs/nodejs_app_artifact'
     ArtifactName: 'nodejs_app_artifact'
     publishLocation: 'Container'
   displayName: 'Publish artifact'
-
-
