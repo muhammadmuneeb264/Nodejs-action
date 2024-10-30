@@ -1,5 +1,3 @@
-# azure-pipelines.yml
-
 trigger:
 - master
 
@@ -23,6 +21,7 @@ steps:
 - script: |
     mkdir -p $(Build.ArtifactStagingDirectory)
     cp -R * $(Build.ArtifactStagingDirectory)
+    cp web.config $(Build.ArtifactStagingDirectory)  # Ensure web.config is included
   displayName: 'Copy files to artifact staging directory'
 
 - publish: $(Build.ArtifactStagingDirectory)
