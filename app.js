@@ -17,6 +17,20 @@ app.get('/', (req, res) => {
                 .container { padding: 2rem; max-width: 800px; margin: 0 auto; }
                 h1 { color: #4CAF50; }
                 p { font-size: 1.1rem; line-height: 1.6; }
+                .button-container { margin-top: 1.5rem; }
+                .button { 
+                    display: inline-block; 
+                    padding: 10px 20px; 
+                    font-size: 1rem; 
+                    color: #fff; 
+                    text-decoration: none; 
+                    border-radius: 5px; 
+                    transition: background-color 0.3s ease; 
+                    margin-right: 10px;
+                }
+                .button.contact { background-color: #007BFF; }
+                .button.learn { background-color: #28a745; }
+                .button:hover { opacity: 0.8; }
                 footer { background-color: #333; color: #fff; text-align: center; padding: 1rem; position: fixed; width: 100%; bottom: 0; }
             </style>
         </head>
@@ -31,8 +45,13 @@ app.get('/', (req, res) => {
                 <h2>What I Do</h2>
                 <p>I specialize in deploying and managing applications in cloud environments, automating deployment pipelines, and ensuring smooth operations for production applications.</p>
 
-                <h2>Contact Me</h2>
-                <p>If you have any questions or would like to connect, feel free to reach out!</p>
+                <div class="button-container">
+                    <a href="mailto:muneeb@example.com" class="button contact">Contact Me</a>
+                    <a href="#learn-more" class="button learn">Learn More</a>
+                </div>
+
+                <h2 id="learn-more" style="margin-top: 2rem;">Learn More About My Work</h2>
+                <p>Explore my experience in DevOps, cloud deployments, and automated pipelines. I’m dedicated to delivering efficient solutions for scalable and resilient systems.</p>
             </div>
             <footer>
                 <p>&copy; 2024 Muhammad Muneeb | Technyx System</p>
@@ -45,5 +64,6 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
 
 
