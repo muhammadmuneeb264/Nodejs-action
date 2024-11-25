@@ -2,10 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files
-app.use(express.static('public'));
-
-// Serve the profile page
+// Serve the homepage with HTML content
 app.get('/', (req, res) => {
     res.send(`
         <!DOCTYPE html>
@@ -13,93 +10,51 @@ app.get('/', (req, res) => {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Professional Profile - Muhammad Muneeb</title>
+            <title>Welcome to My Website</title>
             <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    margin: 0;
-                    padding: 0;
-                    background-color: #f3f4f6;
-                    color: #333;
+                body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f3f4f6; color: #333; }
+                header { background-color: #4CAF50; color: white; padding: 1rem; text-align: center; }
+                .container { padding: 2rem; max-width: 800px; margin: 0 auto; }
+                h1 { color: #4CAF50; }
+                p { font-size: 1.1rem; line-height: 1.6; }
+                .button-container { margin-top: 1.5rem; }
+                .button { 
+                    display: inline-block; 
+                    padding: 10px 20px; 
+                    font-size: 1rem; 
+                    color: #fff; 
+                    text-decoration: none; 
+                    border-radius: 5px; 
+                    transition: background-color 0.3s ease; 
+                    margin-right: 10px;
                 }
-                header {
-                    background-color: #007BFF;
-                    color: white;
-                    text-align: center;
-                    padding: 1.5rem 0;
-                }
-                .container {
-                    max-width: 800px;
-                    margin: 0 auto;
-                    padding: 2rem;
-                }
-                .profile-image {
-                    width: 150px;
-                    height: 150px;
-                    border-radius: 50%;
-                    margin: 0 auto;
-                    display: block;
-                    border: 3px solid #007BFF;
-                }
-                h1, h2 {
-                    text-align: center;
-                    color: #007BFF;
-                }
-                .summary {
-                    text-align: center;
-                    margin: 1rem 0;
-                }
-                .badges {
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: space-around;
-                    margin-top: 2rem;
-                }
-                .badge {
-                    width: 150px;
-                    height: 150px;
-                    margin: 1rem;
-                    text-align: center;
-                }
-                footer {
-                    background-color: #333;
-                    color: white;
-                    text-align: center;
-                    padding: 1rem;
-                    margin-top: 2rem;
-                }
+                .button.contact { background-color: #007BFF; }
+                .button.learn { background-color: #28a745; }
+                .button:hover { opacity: 0.8; }
+                footer { background-color: #333; color: #fff; text-align: center; padding: 1rem; position: fixed; width: 100%; bottom: 0; }
             </style>
         </head>
         <body>
             <header>
-                <h1>Muhammad Muneeb</h1>
-                <p>DevOps Engineer | Azure DevOps | AWS | Kubernetes | Terraform | GCP</p>
+                <h1>Welcome to My Website</h1>
             </header>
             <div class="container">
-                <img src="profile.jpg" alt="Profile Picture" class="profile-image">
-                <div class="summary">
-                    <p>
-                        Possessing a Bachelor's Degree and armed with 3 years of hands-on experience in the dynamic realms of Networking, DevOps, and Cloud services. My passion lies in weaving intricate networks and architecting robust system solutions that harness the power of cloud technology.
-                    </p>
+                <h2>About Me</h2>
+                <p>This is Muhammad Zubair, a DevOps Engineer from Technyx System. Welcome to my website!</p>
+
+                <h2>What I Do</h2>
+                <p>I specialize in deploying and managing applications in cloud environments, automating deployment pipelines, and ensuring smooth operations for production applications.</p>
+
+                <div class="button-container">
+                    <a href="mailto:muneeb@example.com" class="button contact">Contact Me</a>
+                    <a href="#learn-more" class="button learn">Learn More</a>
                 </div>
-                <h2>Badges</h2>
-                <div class="badges">
-                    <div class="badge">
-                        <img src="badge1.png" alt="CCNA: Introduction to Networks">
-                        <p>CCNA: Introduction to Networks</p>
-                    </div>
-                    <div class="badge">
-                        <img src="badge2.png" alt="Introduction to Cybersecurity">
-                        <p>Introduction to Cybersecurity</p>
-                    </div>
-                    <div class="badge">
-                        <img src="badge3.png" alt="CCNA: Switching, Routing">
-                        <p>CCNA: Switching, Routing</p>
-                    </div>
-                </div>
+
+                <h2 id="learn-more" style="margin-top: 2rem;">Learn More About My Work</h2>
+                <p>Explore my experience in DevOps, cloud deployments, and automated pipelines. I’m dedicated to delivering efficient solutions for scalable and resilient systems.</p>
             </div>
             <footer>
-                <p>&copy; 2024 Muhammad Muneeb</p>
+                <p>&copy; 2024 Muhammad Muneeb | Technyx System</p>
             </footer>
         </body>
         </html>
@@ -107,9 +62,7 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is running at http://localhost:${PORT}`);
-});
-
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 
