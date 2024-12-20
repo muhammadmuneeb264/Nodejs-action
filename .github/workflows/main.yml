@@ -29,6 +29,8 @@ jobs:
 
     - name: Deploy and Start Application
       run: |
-        pm2 delete Nodejs-app || true               # Remove existing process, if any
-        pm2 start app.js --name "Nodejs-app"        # Start the app
-        pm2 save                                    # Save the process list for persistence
+        if pm2 describe Nodejs-app > /dev/null; then 
+          pm2 delete Nodejs-app; 
+        fi
+        pm2 start app.js --name "Nodejs-app"
+        pm2 save
