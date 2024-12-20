@@ -1,41 +1,48 @@
-name: Nodejs Deployment
+name: Node.js Application Deployment
 
 on:
   push:
     branches:
-      - main
+      - main  # Trigger on push to the main branch
 
 jobs:
   build-and-deploy:
-    runs-on: self-hosted  # Use self-hosted runner (machine)
+    runs-on: self-hosted  # Runs on your self-hosted runner
 
     steps:
+    # Step 1: Checkout Code
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Set up Node.js
+    # Step 2: Set Up Node.js Environment
+    - name: Set Up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18'  # Node.js version jo project ke liye required hai
+        node-version: '18'  # Specify the required Node.js version
 
+    # Step 3: Install Dependencies
     - name: Install Dependencies
       run: npm install
 
-    - name: Install PM2 Globally
-      run: npm install -g pm2
-
+    # Step 4: Build Application
     - name: Build Application
       run: npm run build
 
-    - name: Deploy Application Using PM2
-      run: |
-        pm2 stop portfolio || true                      # Stop any existing instance
-        pm2 delete portfolio || true                    # Remove it from PM2 list
-        pm2 start app.js --name "portfolio" --watch     # Start app in PM2 with live file watching
-        pm2 save                                        # Save PM2 process list for auto-restart
+    # Step 5: Install PM2 Globally
+    - name: Install PM2 Globally
+      run: npm install -g pm2
 
-    - name: Set PM2 Startup Script (Persistent After Reboot)
+    # Step 6: Deploy Application with PM2
+    - name: Deploy Application with PM2
       run: |
-        pm2 unstartup || true                           # Remove any old startup configs
-        pm2 startup --silent                            # Generate startup script
-        pm2 save                                        # Save new PM2 process list
+        pm2 stop Nodejs-app || true                 # Stop existing instance if running
+        pm2 delete Nodejs-app || true               # Remove from PM2 process list
+        pm2 start app.js --name "Nodejs-app" --watch  # Start app and enable auto-restart on file changes
+        pm2 save                                    # Save PM2 process list for reboot persistence
+
+    # Step 7: Set Up PM2 Startup Script
+    - name: Set Up PM2 Startup Script
+      run: |
+        pm2 unstartup || true                       # Clean up any previous startup configuration
+        pm2 startup --silent                        # Configure PM2 to auto-start on machine reboot
+        pm2 save                                    # Save the new process list
