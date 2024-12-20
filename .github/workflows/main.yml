@@ -1,4 +1,4 @@
-name: Nodejs-app
+name: Nodejs Deployment
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: self-hosted  # Use self-hosted runner
+    runs-on: self-hosted  # Use self-hosted runner (machine)
 
     steps:
     - name: Checkout Code
@@ -16,25 +16,26 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18'  # Your Node.js version
+        node-version: '18'  # Node.js version jo project ke liye required hai
 
     - name: Install Dependencies
       run: npm install
 
+    - name: Install PM2 Globally
+      run: npm install -g pm2
+
     - name: Build Application
       run: npm run build
 
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1  # Your AWS region (replace with your specific region)
-
-    - name: Install PM2
-      run: npm install -g pm2
-
-    - name: Deploy to EC2
+    - name: Deploy Application Using PM2
       run: |
-        pm2 stop all || true
-        pm2 start app.js --name "Nodejs-app"
+        pm2 stop portfolio || true                      # Stop any existing instance
+        pm2 delete portfolio || true                    # Remove it from PM2 list
+        pm2 start app.js --name "portfolio" --watch     # Start app in PM2 with live file watching
+        pm2 save                                        # Save PM2 process list for auto-restart
+
+    - name: Set PM2 Startup Script (Persistent After Reboot)
+      run: |
+        pm2 unstartup || true                           # Remove any old startup configs
+        pm2 startup --silent                            # Generate startup script
+        pm2 save                                        # Save new PM2 process list
