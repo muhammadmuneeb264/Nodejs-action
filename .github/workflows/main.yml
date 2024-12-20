@@ -1,4 +1,4 @@
-name: Nodejs Deployment
+name: Nodejs-app
 
 on:
   push:
@@ -31,7 +31,10 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1  # Your AWS region (replace with your specific region)
 
+    - name: Install PM2
+      run: npm install -g pm2
+
     - name: Deploy to EC2
       run: |
         pm2 stop all || true
-        pm2 start app.js --name "NodeJs"
+        pm2 start app.js --name "Nodejs-app"
