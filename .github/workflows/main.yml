@@ -35,10 +35,10 @@ jobs:
       # Step 6: Deploy Application with PM2
       - name: Deploy Application with PM2
         run: |
-          pm2 stop Nodejs-app || true # Stop existing instance if running
-          pm2 delete Nodejs-app || true # Remove from PM2 process list
-          pm2 start app.js --name "Nodejs-app" --watch # Start app and enable auto-restart on file changes
-          pm2 save # Save PM2 process list for reboot persistence
+          pm2 stop Nodejs-app 2>/dev/null || true # Suppress errors if the process doesn't exist
+          pm2 delete Nodejs-app 2>/dev/null || true # Suppress errors if the process doesn't exist
+          pm2 start app.js --name "Nodejs-app" --watch # Start the app
+          pm2 save # Save the PM2 process list
 
       # Step 7: Set Up PM2 Startup Script
       - name: Set Up PM2 Startup Script
