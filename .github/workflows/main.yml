@@ -1,40 +1,48 @@
-name: Nodejs-app
+name: Node.js Application Deployment
 
 on:
   push:
     branches:
-      - main
+      - main # Trigger on push to the main branch
 
 jobs:
   build-and-deploy:
-    runs-on: self-hosted  # Use self-hosted runner
+    runs-on: self-hosted # Runs on your self-hosted runner
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      # Step 1: Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'  # Your Node.js version
+      # Step 2: Set Up Node.js Environment
+      - name: Set Up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Specify the required Node.js version
 
-    - name: Install Dependencies
-      run: npm install
+      # Step 3: Install Dependencies
+      - name: Install Dependencies
+        run: npm install
 
-    - name: Build Application
-      run: npm run build
+      # Step 4: Build Application
+      - name: Build Application
+        run: npm run build
 
-    - name: Install PM2
-      run: npm install -g pm2
+      # Step 5: Install PM2 Globally
+      - name: Install PM2 Globally
+        run: npm install -g pm2
 
-    - name: Deploy and Start Application with PM2
-      run: |
-        if pm2 describe Nodejs-app > /dev/null; then 
-          pm2 delete Nodejs-app; 
-        fi
-        pm2 start app.js --name "Nodejs-app"
-        pm2 save
-        pm2 startup
+      # Step 6: Deploy Application with PM2
+      - name: Deploy Application with PM2
+        run: |
+          pm2 stop Nodejs-app || true # Stop existing instance if running
+          pm2 delete Nodejs-app || true # Remove from PM2 process list
+          pm2 start app.js --name "Nodejs-app" --watch # Start app and enable auto-restart on file changes
+          pm2 save # Save PM2 process list for reboot persistence
 
-    - name: Reboot Machine
-      run: sudo reboot
+      # Step 7: Set Up PM2 Startup Script
+      - name: Set Up PM2 Startup Script
+        run: |
+          pm2 unstartup || true # Clean up any previous startup configuration
+          pm2 startup --silent # Configure PM2 to auto-start on machine reboot
+          pm2 save # Save the new process list
