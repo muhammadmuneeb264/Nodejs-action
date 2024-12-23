@@ -1,7 +1,8 @@
-# Simple Node Express Hello World App
+# Simple Node Express Front Page 
 
 
-![localhost:3000](/public/images/localhost_3000.png?raw=true "Node & Express")
+![image](https://github.com/user-attachments/assets/b9d1fdf1-e7f7-460d-bac7-faa5e95eaefa)
+
 
 # Steps :
 
