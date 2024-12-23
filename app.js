@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
             </header>
             <div class="container">
                 <h2>About Me</h2>
-                <p>This is Muhammad Muneeb, a DevOps Engineer from Technyx System. Welcome to my website!</p>
+                <p>This is Muhammad Muneeb Shaikh, a DevOps Engineer from Technyx System. Welcome to my website!</p>
 
                 <h2>What I Do</h2>
                 <p>I specialize in deploying and managing applications in cloud environments, automating deployment pipelines, and ensuring smooth operations for production applications.</p>
